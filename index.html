@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rehberlik Servisi — Dijital Rehberlik ve Psikolojik Danışma Sistemi</title>
+  <meta name="description" content="Devlet okulları ve rehberlik servisleri için %100 yerel, ücretsiz ve MEB e-Rehberlik uyumlu dijital PDR sistemi.">
+  
+  <!-- Stiller -->
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/print.css">
+  
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#4f46e5">
+</head>
+<body>
+
+<div class="app-container">
+  <!-- Sol Menü (Sidebar) -->
+  <aside class="sidebar no-print">
+    <div class="brand-area">
+      <div class="brand-logo-icon">PDR</div>
+      <div class="brand-title">
+        <span class="part-brand">Rehberlik</span> <span class="part-net">Servisi</span>
+      </div>
+    </div>
+
+    <nav class="nav-menu">
+      <button class="nav-item active" data-view="agenda" onclick="window.app.switchView('agenda')">
+        <div class="icon-box">📅</div>
+        <span>Ajanda</span>
+      </button>
+
+      <button class="nav-item" data-view="mevzuat" onclick="window.app.switchView('mevzuat')">
+        <div class="icon-box">🏛️</div>
+        <span>Mevzuat</span>
+      </button>
+
+      <!-- ÖĞRENCİ & GÖRÜŞME -->
+      <div class="nav-category ogrenci">
+        <span class="dot"></span>
+        <span>Öğrenci & Görüşme</span>
+      </div>
+
+      <button class="nav-item" data-view="students" onclick="window.app.switchView('students')">
+        <div class="icon-box">🪪</div>
+        <span>Öğrenci Dosyası</span>
+      </button>
+
+      <button class="nav-item" data-view="ozelegitim" onclick="window.app.switchView('ozelegitim')">
+        <div class="icon-box">💖</div>
+        <span>Özel Eğitim</span>
+      </button>
+
+      <button class="nav-item" data-view="classes" onclick="window.app.switchView('classes')">
+        <div class="icon-box">🖥️</div>
+        <span>Sınıf Bilgisi</span>
+      </button>
+
+      <button class="nav-item" data-view="sessions" onclick="window.app.switchView('sessions')">
+        <div class="icon-box">💬</div>
+        <span>Bireysel Rehberlik</span>
+      </button>
+
+      <!-- PLANLAMA & KAYNAK -->
+      <div class="nav-category planlama">
+        <span class="dot"></span>
+        <span>Planlama & Kaynak</span>
+      </div>
+
+      <button class="nav-item" data-view="yrf" onclick="window.app.switchView('yrf')">
+        <div class="icon-box">📅</div>
+        <span>Yıllık Rehberlik</span>
+      </button>
+
+      <button class="nav-item" data-view="kurul" onclick="window.app.switchView('kurul')">
+        <div class="icon-box">🏛️</div>
+        <span>Kurul & Komisyon</span>
+      </button>
+
+      <button class="nav-item" data-view="eylemProjeler" onclick="window.app.switchView('eylemProjeler')">
+        <div class="icon-box">🎯</div>
+        <span>Eylem Planı ve Proje</span>
+      </button>
+
+      <!-- KAYIT & RAPOR -->
+      <div class="nav-category kayit">
+        <span class="dot"></span>
+        <span>Kayıt & Rapor</span>
+      </div>
+
+      <button class="nav-item" data-view="notes" onclick="window.app.switchView('notes')">
+        <div class="icon-box">📝</div>
+        <span>Notlar</span>
+      </button>
+
+      <button class="nav-item" data-view="forms" onclick="window.app.switchView('forms')">
+        <div class="icon-box">📄</div>
+        <span>Form ve Belge</span>
+      </button>
+
+      <button class="nav-item" data-view="reports" onclick="window.app.switchView('reports')">
+        <div class="icon-box">📊</div>
+        <span>İstatistik</span>
+      </button>
+
+      <button class="nav-item" data-view="settings" onclick="window.app.switchView('settings')">
+        <div class="icon-box">⚙️</div>
+        <span>Ayarlar</span>
+      </button>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div style="font-weight:700; color:var(--text-main); font-size:11.5px;">🔒 %100 Yerel & Ücretsiz</div>
+      <div style="font-size:11px;">Verileriniz sadece okul bilgisayarınızda saklanır.</div>
+    </div>
+  </aside>
+
+  <!-- Ana İçerik -->
+  <main class="main-content">
+    <!-- Üst Başlık -->
+    <header class="header-bar no-print">
+      <div class="header-left">
+        <div class="header-brand-logo">
+          <span class="part1">Rehberlik</span> <span class="part2">Servisi</span>
+        </div>
+        <div class="header-school-name" id="header-school-name">Çatalca Anadolu Lisesi</div>
+      </div>
+
+      <div class="header-right">
+        <div class="header-clock-box">
+          <div class="time" id="header-clock-time">14:36</div>
+          <div class="date" id="header-clock-date">12 EKİM 2026 PAZARTESİ</div>
+        </div>
+        <button class="btn-primary-action" onclick="window.app.openNewSessionModal()">+ Yeni Görüşme</button>
+      </div>
+    </header>
+
+    <!-- İçerik Alanı -->
+    <div class="content-area no-print">
+
+      <!-- 1. AJANDA & DASHBOARD -->
+      <section id="view-agenda" class="view-section active">
+        <div class="grid-stats">
+          <div class="stat-card">
+            <div class="stat-info">
+              <h4>Kayıtlı Öğrenci</h4>
+              <div class="num" id="stat-total-students">0</div>
+            </div>
+            <div class="stat-icon" style="background:#eef2ff; color:#4f46e5;">👨‍🎓</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h4>Toplam Görüşme</h4>
+              <div class="num" id="stat-total-sessions">0</div>
+            </div>
+            <div class="stat-icon" style="background:#ecfdf5; color:#10b981;">💬</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h4>Özel Eğitim / BEP</h4>
+              <div class="num" id="stat-special-edu">0</div>
+            </div>
+            <div class="stat-icon" style="background:#fee2e2; color:#ef4444;">♿</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-info">
+              <h4>Bugünkü İşler</h4>
+              <div class="num" id="stat-today-agenda">0</div>
+            </div>
+            <div class="stat-icon" style="background:#fffbeb; color:#f59e0b;">📅</div>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <div class="panel-header">
+            <h3>📅 Günün Randevuları ve İşleri</h3>
+            <button class="header-btn" onclick="window.app.openNewSessionModal()">+ Görüşme Ekle</button>
+          </div>
+          <div style="padding:20px;" id="today-agenda-list">
+            <!-- Dinamik doldurulacak -->
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <div class="panel-header">
+            <h3>🕒 Son Yapılan Bireysel Görüşmeler</h3>
+            <button class="header-btn" onclick="window.app.switchView('sessions')">Tümünü Gör</button>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Öğrenci Adı</th>
+                  <th>Sınıfı</th>
+                  <th>Görüşme Türü</th>
+                  <th>Konu</th>
+                  <th>Tarih & Saat</th>
+                  <th>İşlem</th>
+                </tr>
+              </thead>
+              <tbody id="recent-sessions-table">
+                <!-- Dinamik doldurulacak -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. ÖĞRENCİ YÖNETİMİ -->
+      <section id="view-students" class="view-section">
+        <div class="card-panel">
+          <div class="panel-header">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <h3>👨‍🎓 Öğrenci Kütüğü & Dosyaları</h3>
+              <span class="badge info" id="student-count-badge">0 Öğrenci</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div class="search-input-wrapper">
+                <span class="icon">🔍</span>
+                <input type="text" class="form-control" placeholder="Ad, soyad veya okul no ile ara..." oninput="window.studentsModule.setSearch(this.value)">
+              </div>
+              <button class="header-btn primary" onclick="window.app.openNewStudentModal()">+ Öğrenci Ekle</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Okul No</th>
+                  <th>Öğrenci Adı Soyadı</th>
+                  <th>Sınıf / Şube</th>
+                  <th>Veli & İletişim</th>
+                  <th>Risk / Özel Durum</th>
+                  <th>İşlemler</th>
+                </tr>
+              </thead>
+              <tbody id="students-table-body">
+                <!-- Dinamik liste -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. BİREYSEL GÖRÜŞMELER -->
+      <section id="view-sessions" class="view-section">
+        <div class="card-panel">
+          <div class="panel-header">
+            <h3>💬 Bireysel Görüşme Kayıtları (e-Rehberlik Uyumlu)</h3>
+            <button class="header-btn primary" onclick="window.app.openNewSessionModal()">+ Yeni Görüşme Kaydet</button>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Tarih & Saat</th>
+                  <th>Görüşülen Kişi</th>
+                  <th>Tür</th>
+                  <th>Konu & MEB Kodu</th>
+                  <th>Süre</th>
+                  <th>Gizlilik</th>
+                  <th>İşlemler</th>
+                </tr>
+              </thead>
+              <tbody id="sessions-table-body">
+                <!-- Dinamik liste -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. SINIFLAR & RİSK HARİTASI -->
+      <section id="view-classes" class="view-section">
+        <div class="card-panel">
+          <div class="panel-header">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <h3 id="risk-class-title">Sınıf Risk Haritası</h3>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div id="class-select-buttons" style="display:flex; gap:6px;"></div>
+              <button class="header-btn" onclick="window.classesModule.printRiskMap()">🖨️ Risk Haritasını Yazdır</button>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Öğrenci Adı Soyadı</th>
+                  <th>Parçalanmış Aile</th>
+                  <th>Akademik Başarısızlık</th>
+                  <th>Sınav Kaygısı</th>
+                  <th>Özel Eğitim</th>
+                  <th>Detay</th>
+                </tr>
+              </thead>
+              <tbody id="risk-table-body">
+                <!-- Dinamik liste -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 5. ÖZEL EĞİTİM & BEP -->
+      <section id="view-ozelegitim" class="view-section">
+        <div class="card-panel">
+          <div class="panel-header">
+            <h3>♿ Özel Eğitim, Kaynaştırma ve BEP Takip Listesi</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Öğrenci Adı</th>
+                  <th>Eğitsel Tanı</th>
+                  <th>RAM Rapor Tarihi</th>
+                  <th>BEP Tarihi</th>
+                  <th>Destek Eğitim Odası</th>
+                  <th>Notlar</th>
+                  <th>Dosya</th>
+                </tr>
+              </thead>
+              <tbody id="special-edu-table-body">
+                <!-- Dinamik liste -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. RAPORLAR & İSTATİSTİK -->
+      <section id="view-reports" class="view-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+          <h2 style="font-size:18px; font-weight:700;">📊 Dönemlik Rehberlik Hizmetleri Raporu</h2>
+          <button class="header-btn primary" onclick="window.reportsModule.printTermReport()">🖨️ Resmi Dönem Raporunu Yazdır</button>
+        </div>
+        <div id="report-summary-cards">
+          <!-- Dinamik içerik -->
+        </div>
+      </section>
+
+      <!-- 7. AYARLAR & YEDEKLEME -->
+      <section id="view-settings" class="view-section">
+        <div class="card-panel">
+          <div class="panel-header">
+            <h3>🏫 Okul ve Rehberlik Servisi Bilgileri</h3>
+          </div>
+          <div style="padding:24px;">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Okul / Kurum Adı</label>
+                <input type="text" id="set-school-name" class="form-control" placeholder="Örn: Çatalca Anadolu Lisesi">
+              </div>
+              <div class="form-group">
+                <label>Rehber Öğretmen / Psikolojik Danışman</label>
+                <input type="text" id="set-counselor-name" class="form-control" placeholder="Adınız ve Soyadınız">
+              </div>
+              <div class="form-group">
+                <label>Eğitim-Öğretim Yılı</label>
+                <input type="text" id="set-academic-year" class="form-control" value="2026-2027">
+              </div>
+            </div>
+            <button class="header-btn primary" onclick="window.settingsModule.saveProfile()">Ayarları Kaydet</button>
+          </div>
+        </div>
+
+        <div class="card-panel">
+          <div class="panel-header">
+            <h3>💾 Güvenlik & Yerel Yedekleme (KVKK Uyumlu)</h3>
+          </div>
+          <div style="padding:24px;">
+            <p style="color:var(--text-muted); font-size:13.5px; margin-bottom:16px; line-height:1.6;">
+              Tüm verileriniz yalnızca bu bilgisayarın tarayıcı önbelleğinde saklanır. Başka bir bilgisayara geçmek, okul idaresine teslim etmek ya da veri kaybını önlemek için düzenli aralıklarla yedek dosyanızı indiriniz.
+            </p>
+            <div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+              <button class="header-btn primary" onclick="window.settingsModule.exportBackup()">📥 Tüm Verileri Yedekle (.JSON İndir)</button>
+              
+              <label class="header-btn" style="cursor:pointer; margin:0;">
+                📤 Yedekten Geri Yükle (.JSON)
+                <input type="file" accept=".json" style="display:none;" onchange="window.settingsModule.importBackup(event)">
+              </label>
+
+              <button class="header-btn" style="color:var(--danger); border-color:var(--danger);" onclick="window.settingsModule.clearAllData()">⚠️ Tüm Verileri Sıfırla</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. EYLEM PLANI VE PROJE -->
+      <section id="view-eylemProjeler" class="view-section">
+        <div class="module-hero-banner">
+          <div class="module-hero-left">
+            <div class="module-hero-icon">🎯</div>
+            <div class="module-hero-text">
+              <h2>Eylem Planı ve Proje</h2>
+              <p>projeler, eylem planları ve resmi yazıların yapılacak işleri, tarihleri ve belgeleri</p>
+            </div>
+          </div>
+          <div class="module-hero-badge">
+            <div class="num" id="project-active-badge">0 AKTİF ÇALIŞMA</div>
+            <div class="lbl">DURUM</div>
+          </div>
+        </div>
+
+        <div class="action-toolbar">
+          <div class="toolbar-left">
+            <div class="search-box">
+              <span class="icon">🔍</span>
+              <input type="text" placeholder="Çalışma ara..." oninput="window.eylemProjelerModule.setSearch(this.value)">
+            </div>
+            <div class="pill-group">
+              <button class="pill-btn active" data-filter="aktif" onclick="window.eylemProjelerModule.setFilter('aktif')">Aktif</button>
+              <button class="pill-btn" data-filter="arsiv" onclick="window.eylemProjelerModule.setFilter('arsiv')">📦 Arşiv</button>
+              <button class="pill-btn" data-filter="il" onclick="window.eylemProjelerModule.setFilter('il')">🏛️ İl Eylem Planları <span class="count-badge">4</span></button>
+              <button class="pill-btn" data-filter="hepsi" onclick="window.eylemProjelerModule.setFilter('hepsi')">Tümü</button>
+            </div>
+          </div>
+          <button class="btn-primary-action" onclick="window.eylemProjelerModule.openNewProjectModal()">+ Çalışma Ekle</button>
+        </div>
+
+        <div class="cards-grid" id="project-cards-container">
+          <!-- Dinamik doldurulacak -->
+        </div>
+      </section>
+
+      <!-- 9. YILLIK REHBERLİK FAALİYETLERİ -->
+      <section id="view-yrf" class="view-section">
+        <div class="module-hero-banner">
+          <div class="module-hero-left">
+            <div class="module-hero-icon">📅</div>
+            <div class="module-hero-text">
+              <h2>Yıllık Rehberlik Faaliyetleri</h2>
+              <p>MEB Yıllık Çerçeve Planı, Genel, Yerel ve Özel Hedefler ile Faaliyet Takvimi</p>
+            </div>
+          </div>
+        </div>
+        <div id="yrf-targets-container" style="margin-bottom:20px;"></div>
+        <div id="yrf-timeline-container"></div>
+      </section>
+
+      <!-- 10. KURUL VE KOMİSYONLAR -->
+      <section id="view-kurul" class="view-section">
+        <div class="module-hero-banner">
+          <div class="module-hero-left">
+            <div class="module-hero-icon">🏛️</div>
+            <div class="module-hero-text">
+              <h2>Kurul, Komisyon ve Toplantılar</h2>
+              <p>RHYK, BEP Geliştirme Birimi, ŞÖK ve Komisyon Tutanakları</p>
+            </div>
+          </div>
+        </div>
+        <div id="kurul-meetings-container"></div>
+      </section>
+
+      <!-- 11. MEVZUAT -->
+      <section id="view-mevzuat" class="view-section">
+        <div class="module-hero-banner">
+          <div class="module-hero-left">
+            <div class="module-hero-icon">📜</div>
+            <div class="module-hero-text">
+              <h2>PDR ve Özel Eğitim Mevzuatı</h2>
+              <p>Yönetmelikler, resmi ilkeler, yasal haklar ve danışmanlık tedbirleri</p>
+            </div>
+          </div>
+        </div>
+        <div id="mevzuat-list-container"></div>
+      </section>
+
+      <!-- 12. FORM VE BELGE -->
+      <section id="view-forms" class="view-section">
+        <div class="module-hero-banner">
+          <div class="module-hero-left">
+            <div class="module-hero-icon">📄</div>
+            <div class="module-hero-text">
+              <h2>Form ve Belge Arşivi</h2>
+              <p>MEB Desimal dosya sistemi (805.01) ve standart PDR evrak şablonları</p>
+            </div>
+          </div>
+        </div>
+        <div id="forms-list-container"></div>
+      </section>
+
+      <!-- 13. NOTLAR -->
+      <section id="view-notes" class="view-section">
+        <div class="module-hero-banner">
+          <div class="module-hero-left">
+            <div class="module-hero-icon">📝</div>
+            <div class="module-hero-text">
+              <h2>Hızlı Notlar & Hatırlatmalar</h2>
+              <p>Günlük görüşme hatırlatıcıları ve yapışkan notlar</p>
+            </div>
+          </div>
+          <button class="btn-primary-action" onclick="window.notesModule.addNote()">+ Yeni Not Ekle</button>
+        </div>
+        <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:16px;" id="notes-grid-container"></div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<!-- MODAL: YENİ ÖĞRENCİ EKLE -->
+<div class="modal-overlay" id="new-student-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>👨‍🎓 Yeni Öğrenci Kaydı</h3>
+      <button class="modal-close" onclick="window.app.closeModal('new-student-modal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="new-student-form" onsubmit="event.preventDefault(); window.studentsModule.saveStudentFromForm();">
+        <div class="form-row">
+          <div class="form-group">
+            <label>Adı</label>
+            <input type="text" id="modal-st-name" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Soyadı</label>
+            <input type="text" id="modal-st-surname" class="form-control" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Okul No</label>
+            <input type="text" id="modal-st-no" class="form-control" placeholder="Örn: 245">
+          </div>
+          <div class="form-group">
+            <label>Sınıf Seviyesi</label>
+            <select id="modal-st-class" class="form-control" required>
+              <option value="9">9. Sınıf</option>
+              <option value="10">10. Sınıf</option>
+              <option value="11">11. Sınıf</option>
+              <option value="12">12. Sınıf</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Şube</label>
+            <select id="modal-st-branch" class="form-control" required>
+              <option value="A">A Şubesi</option>
+              <option value="B">B Şubesi</option>
+              <option value="C">C Şubesi</option>
+              <option value="D">D Şubesi</option>
+              <option value="E">E Şubesi</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Cinsiyet</label>
+            <select id="modal-st-gender" class="form-control">
+              <option value="Kız">Kız</option>
+              <option value="Erkek">Erkek</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Veli Adı Soyadı</label>
+            <input type="text" id="modal-st-parent-name" class="form-control" placeholder="Örn: Ayşe Yılmaz (Anne)">
+          </div>
+          <div class="form-group">
+            <label>Veli Telefonu</label>
+            <input type="text" id="modal-st-parent-phone" class="form-control" placeholder="05xx xxx xx xx">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Risk Faktörleri (Sınıf Risk Haritası İçin)</label>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; font-size:13px; margin-top:6px;">
+            <label><input type="checkbox" class="risk-cb" value="Parçalanmış Aile"> Parçalanmış Aile</label>
+            <label><input type="checkbox" class="risk-cb" value="Akademik Başarısızlık"> Akademik Başarısızlık</label>
+            <label><input type="checkbox" class="risk-cb" value="Sınav Kaygısı"> Sınav Kaygısı</label>
+            <label><input type="checkbox" class="risk-cb" value="Sürekli Devamsızlık"> Sürekli Devamsızlık</label>
+            <label><input type="checkbox" class="risk-cb" value="Maddi Yetersizlik"> Maddi Yetersizlik</label>
+            <label><input type="checkbox" class="risk-cb" value="Uyum Güçlüğü"> Okula Uyum Güçlüğü</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label style="display:flex; align-items:center; gap:8px; cursor:pointer;">
+            <input type="checkbox" id="modal-st-special">
+            <span>Özel Eğitim / Kaynaştırma / BEP Kapsamında</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Özel Notlar</label>
+          <textarea id="modal-st-notes" class="form-control" rows="2" placeholder="Gözlemler veya önemli notlar..."></textarea>
+        </div>
+
+        <div class="modal-footer" style="padding:16px 0 0 0; background:none;">
+          <button type="button" class="header-btn" onclick="window.app.closeModal('new-student-modal')">İptal</button>
+          <button type="submit" class="header-btn primary">Öğrenciyi Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: YENİ GÖRÜŞME KAYDI -->
+<div class="modal-overlay" id="new-session-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>💬 Yeni Görüşme Kaydı (MEB e-Rehberlik)</h3>
+      <button class="modal-close" onclick="window.app.closeModal('new-session-modal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="new-session-form" onsubmit="event.preventDefault(); window.sessionsModule.saveSessionFromForm();">
+        <div class="form-row">
+          <div class="form-group" style="flex:2;">
+            <label>Öğrenci Seçiniz</label>
+            <select id="modal-session-student" class="form-control" required></select>
+          </div>
+          <div class="form-group">
+            <label>Görüşme Türü</label>
+            <select id="modal-session-type" class="form-control">
+              <option value="ogrenci">Öğrenci Bireysel</option>
+              <option value="veli">Veli Görüşmesi</option>
+              <option value="ogretmen">Öğretmen Görüşmesi</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Görüşme Tarihi</label>
+            <input type="date" id="modal-session-date" class="form-control" required>
+          </div>
+          <div class="form-group">
+            <label>Saat</label>
+            <input type="time" id="modal-session-time" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Süre (Dk)</label>
+            <input type="number" id="modal-session-duration" class="form-control" value="30">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>MEB e-Rehberlik Hizmet Kodu</label>
+          <select id="modal-session-meb-code" class="form-control">
+            <option value="Gelişimsel / Akademik Gelişim">Gelişimsel / Akademik Gelişim (Ders çalışma, motivasyon)</option>
+            <option value="Gelişimsel / Kariyer Gelişimi">Gelişimsel / Kariyer Gelişimi (Meslek seçimi, YKS/LGS)</option>
+            <option value="Gelişimsel / Sosyal Duygusal Gelişim">Gelişimsel / Sosyal Duygusal Gelişim (Özgüven, iletişim)</option>
+            <option value="Önleyici / Sınav Kaygısı">Önleyici / Sınav Kaygısı</option>
+            <option value="Önleyici / Devamsızlık ve Uyum">Önleyici / Devamsızlık ve Okula Uyum</option>
+            <option value="İyileştirici / Davranış Sorunları">İyileştirici / Davranış Sorunları ve Öfke Kontrolü</option>
+            <option value="Destek / Aile ve Veli Rehberliği">Destek Hizmetleri / Aile ve Veli Rehberliği</option>
+            <option value="Özel Eğitim ve Yönlendirme">Özel Eğitim / RAM Değerlendirme ve Yönlendirme</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Görüşme Konusu (Başlık)</label>
+          <input type="text" id="modal-session-topic" class="form-control" placeholder="Örn: YKS Sayısal Net Takibi ve Hedef Belirleme" required>
+        </div>
+
+        <div class="form-group">
+          <label>Görüşmenin Özeti</label>
+          <textarea id="modal-session-summary" class="form-control" rows="3" placeholder="Görüşmede ele alınan konular, öğrencinin ifadeleri..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Alınan Kararlar / Takip Planı</label>
+          <textarea id="modal-session-decisions" class="form-control" rows="2" placeholder="Uygulanacak adımlar, bir sonraki görüşme tarihi..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label>Gizlilik Düzeyi</label>
+          <select id="modal-session-confidentiality" class="form-control">
+            <option value="normal">Standart (PDR Servisi Arşivi)</option>
+            <option value="cok_gizli">Çok Gizli (Özel Aile / Hassas Durum)</option>
+          </select>
+        </div>
+
+        <div class="modal-footer" style="padding:16px 0 0 0; background:none;">
+          <button type="button" class="header-btn" onclick="window.app.closeModal('new-session-modal')">İptal</button>
+          <button type="submit" class="header-btn primary">Görüşmeyi Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: ÖĞRENCİ DOSYASI VE DETAYLARI -->
+<div class="modal-overlay" id="student-detail-modal">
+  <div class="modal-box" style="max-width:720px;">
+    <div class="modal-header">
+      <h3>📁 Öğrenci Gelişim ve Rehberlik Dosyası</h3>
+      <button class="modal-close" onclick="window.app.closeModal('student-detail-modal')">&times;</button>
+    </div>
+    <div class="modal-body" id="student-detail-modal-body">
+      <!-- Dinamik yüklenecek -->
+    </div>
+  </div>
+</div>
+
+<!-- MODAL: YENİ ÇALIŞMA / PROJE EKLE -->
+<div class="modal-overlay" id="new-project-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🎯 Yeni Çalışma / Eylem Planı Ekle</h3>
+      <button class="modal-close" onclick="window.app.closeModal('new-project-modal')">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="new-project-form" onsubmit="event.preventDefault(); window.eylemProjelerModule.saveProjectFromForm();">
+        <div class="form-group">
+          <label>Çalışma / Proje Adı</label>
+          <input type="text" id="modal-prj-title" class="form-control" placeholder="Örn: Akran Zorbalığını Önleme Eylem Planı" required>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Kategori</label>
+            <select id="modal-prj-category" class="form-control">
+              <option value="il">MEB İl/İlçe Eylem Planı</option>
+              <option value="okul">Okul Rehberlik Projesi</option>
+              <option value="yazi">Resmi Yazı ve Görev</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Sorumlu Birim / Kişi</label>
+            <input type="text" id="modal-prj-resp" class="form-control" placeholder="PDR Servisi">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Başlangıç Tarihi</label>
+            <input type="date" id="modal-prj-start" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Bitiş Tarihi</label>
+            <input type="date" id="modal-prj-end" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Yapılacak İlk İş / Faaliyet</label>
+          <input type="text" id="modal-prj-task1" class="form-control" placeholder="Örn: Komisyon toplantısının yapılması">
+        </div>
+
+        <div class="form-group">
+          <label>İkinci Faaliyet</label>
+          <input type="text" id="modal-prj-task2" class="form-control" placeholder="Örn: Sınıf etkinliklerinin yürütülmesi">
+        </div>
+
+        <div class="modal-footer" style="padding:16px 0 0 0; background:none;">
+          <button type="button" class="header-btn" onclick="window.app.closeModal('new-project-modal')">İptal</button>
+          <button type="submit" class="btn-primary-action">Çalışmayı Kaydet</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- A4 YAZDIRMA ALANI -->
+<div id="print-area"></div>
+
+<!-- JavaScript Modülleri -->
+<script src="js/utils.js"></script>
+<script src="js/db.js"></script>
+<script src="js/modules/agenda.js"></script>
+<script src="js/modules/students.js"></script>
+<script src="js/modules/sessions.js"></script>
+<script src="js/modules/classes.js"></script>
+<script src="js/modules/ozelegitim.js"></script>
+<script src="js/modules/eylemProjeler.js"></script>
+<script src="js/modules/yrf.js"></script>
+<script src="js/modules/kurul.js"></script>
+<script src="js/modules/mevzuat.js"></script>
+<script src="js/modules/forms.js"></script>
+<script src="js/modules/notes.js"></script>
+<script src="js/modules/reports.js"></script>
+<script src="js/modules/settings.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

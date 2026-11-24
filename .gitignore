@@ -1,0 +1,11 @@
+# Python & Build Artifacts
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.spec
+*.exe
+
+# OS generated files
+.DS_Store
+Thumbs.db
